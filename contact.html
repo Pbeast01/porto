@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Pribadi - Ong, Jevanio Atansya</title>
+    <link rel="stylesheet" href="Style-1.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="setel.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+
+        body h2 {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+
+        body p {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+
+        .contact-container {
+            margin-top: 150px;
+            margin-bottom: 50px;
+            opacity: 0; /* Awalnya transparan */
+            transform: translateY(20px); /* Awalnya lebih rendah */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Efek transisi */
+        }
+        
+
+        .contact-container.show {
+            opacity: 1;
+            transform: translateY(0); /* Kembali ke posisi semula */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #25D366;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.3s ease-in-out; /* Efek hover */
+        }
+
+        button:hover {
+            background-color: #1ebf5d;
+            transform: scale(1.1); /* Membesar saat hover */
+        }
+
+        .download-container {
+            margin-top: 350px;
+            margin-bottom: 20px;
+            opacity: 0; /* Awalnya transparan */
+            transform: translateY(20px); /* Awalnya lebih rendah */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Efek transisi */
+        }
+        
+
+        .download-container.show {
+            opacity: 1;
+            transform: translateY(0); /* Kembali ke posisi semula */
+        }
+
+        .download-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: transform 0.3s ease-in-out; /* Efek hover */
+        }
+
+        .download-container a:hover {
+            background-color: #0056b3;
+            transform: scale(1.1); /* Membesar saat hover */
+        }
+
+        footer {
+            margin-top: 0px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #ffffff4e;
+            color: #2e7fb1;
+            padding: 10px 20px;
+            z-index: 1000;
+            transition: top 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="navbar" id="navbar">
+        <div class="logo">
+            <strong>Ong, Jevanio Atansya</strong>
+        </div>
+        <div>
+            <nav>
+                <ul class="nav-ul">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Project.html">Project</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact Section -->
+    <div class="main-banner" id="top">
+        <div class="contact-container">
+            <h2>Hubungi Saya</h2>
+            <p>Klik tombol di bawah ini untuk langsung menghubungi saya via WhatsApp!</p>
+            <button id="whatsapp-button">Chat via WhatsApp</button>
+        </div>
+
+        <!-- WhatsApp Download Link -->
+        <div class="download-container">
+            <p>Belum memiliki WhatsApp? Unduh sekarang:</p>
+            <a href="https://www.whatsapp.com/download" target="_blank">Download WhatsApp</a>
+        </div>
+    </div>
+
+    <footer>
+        <div>jevanio.12345@gmail.com</div>
+    </footer>
+
+    <script>
+        // Fungsi untuk membuka WhatsApp langsung
+        document.getElementById("whatsapp-button").addEventListener("click", function () {
+            const phoneNumber = "62895421583366"; // Ganti dengan nomor Anda
+            const message = "Halo, saya ingin bertanya lebih lanjut."; // Pesan default
+
+            // Redirect ke WhatsApp
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, "_blank");
+        });
+
+        // Navbar hide on scroll down, show on scroll up
+        let lastScrollTop = 0;
+        const navbar = document.getElementById("navbar");
+
+        window.addEventListener("scroll", function () {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop) {
+                navbar.style.top = "-60px"; // Sesuaikan nilai dengan tinggi navbar Anda
+            } else {
+                navbar.style.top = "0";
+            }
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // Intersection Observer untuk efek fade-in
+        const fadeInElements = document.querySelectorAll('.contact-container, .download-container');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show'); // Tambahkan kelas "show" saat elemen terlihat
+                    observer.unobserve(entry.target); // Berhenti mengamati elemen yang sudah terlihat
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeInElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+
+</html>
